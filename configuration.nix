@@ -11,7 +11,15 @@
     ];
 
   nixpkgs.config.allowUnfree = true;
-
+  # Next seven lines courtesy of vbox demo appliance 4 Jan 2025 get basic Hyprland working
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true; # allow x11 applications
+  };
+  programs.sway.enable = true;
+  programs.waybar.enable = true; 
+  console.useXkbConfig = true;
+  
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -92,10 +100,7 @@
   users.defaultUserShell = pkgs.zsh;
 
   # Install firefox.
-  programs.firefox.enable = true;
-  
-  programs.sway.enable = true;
-  programs.waybar.enable = true;  
+  programs.firefox.enable = true; 
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
    
@@ -142,7 +147,17 @@
   #inputs.helix.packages."${pkgs.system}".helix # in flake
   inputs.helix.packages."${pkgs.system}".helix
 
-
+    # Next ten lines courtest of vbox demo appliance 4 Jan 2025 to get basic Hyprland working
+    waybar # status bar
+    mako # notification daemon
+    libnotify # for mako
+    swww # wallpaper daemon
+    kitty # terminal
+    rofi-wayland # wl equiv of rofi app launcher, window switcher ...
+    networkmanagerapplet # tray applet for network manager -- nm-applet
+    grim # screenshot utility
+    grimblast # grim helper
+    udiskie # automount removable media
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
