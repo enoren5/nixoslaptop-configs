@@ -119,8 +119,7 @@
   gotop
   foot
   radeontop
-  git
-  # nerdfonts
+  git  
   gnome-terminal
   # locate
   python3
@@ -159,6 +158,12 @@
     grim # screenshot utility
     grimblast # grim helper
     udiskie # automount removable media
+    nerd-fonts.noto
+    nerd-fonts.hack
+    nerd-fonts.ubuntu
+    nerd-fonts.mplus
+    # vimPlugins.nerdtree
+
 ];
 
   # Some programs need SUID wrappers, can be configured further or are
