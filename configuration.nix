@@ -158,13 +158,17 @@
     grim # screenshot utility
     grimblast # grim helper
     udiskie # automount removable media
-    nerd-fonts.noto
-    nerd-fonts.hack
-    nerd-fonts.ubuntu
-    nerd-fonts.mplus
-    # vimPlugins.nerdtree
-
 ];
+
+
+fonts.packages = with pkgs; [
+  nerd-fonts.fira-code
+  nerd-fonts.droid-sans-mono
+  nerd-fonts.noto
+  nerd-fonts.hack
+  nerd-fonts.ubuntu
+  nerd-fonts.mplus
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
