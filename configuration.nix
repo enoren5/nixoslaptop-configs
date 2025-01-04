@@ -138,7 +138,7 @@
   musl
   gcc
   btop
-
+  meld
   #inputs.helix.packages."${pkgs.system}".helix # in flake
   inputs.helix.packages."${pkgs.system}".helix
 
