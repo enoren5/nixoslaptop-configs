@@ -102,7 +102,7 @@
   # Install firefox.
   programs.firefox.enable = true; 
   
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [ "nix-command"]; # "flakes" ];
    
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -120,7 +120,7 @@
   foot
   radeontop
   git
-  nerdfonts
+  # nerdfonts
   gnome-terminal
   # locate
   python3
@@ -147,7 +147,7 @@
   #inputs.helix.packages."${pkgs.system}".helix # in flake
   inputs.helix.packages."${pkgs.system}".helix
   nix-output-monitor
-  
+  alacritty 
     # Next ten lines courtest of vbox demo appliance 4 Jan 2025 to get basic Hyprland working
     waybar # status bar
     mako # notification daemon
