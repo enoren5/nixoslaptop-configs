@@ -170,7 +170,7 @@
   stow
   lynx
   # www-browser
-
+  atuin
 ];
 
 
