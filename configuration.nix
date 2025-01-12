@@ -1,5 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
+  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, inputs, ... }:
@@ -56,7 +55,15 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.displayManager.gdm.enable = false;
+  # services.displayManager.ly.enable = true;
+  
+  services.xserver = {
+      displayManager = {
+        startx.enable = true;
+      };
+  };
+
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -147,6 +154,7 @@
   inputs.helix.packages."${pkgs.system}".helix
   nix-output-monitor
   alacritty 
+  discord  
     # Next ten lines courtest of vbox demo appliance 4 Jan 2025 to get basic Hyprland working
     waybar # status bar
     mako # notification daemon
@@ -158,6 +166,11 @@
     grim # screenshot utility
     grimblast # grim helper
     udiskie # automount removable media
+
+  stow
+  lynx
+  # www-browser
+
 ];
 
 
