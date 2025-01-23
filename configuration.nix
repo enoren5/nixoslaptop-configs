@@ -190,6 +190,10 @@
   tig
   gimp
     # catnap
+  cava
+  ranger
+  helix
+
   ];
 
 
