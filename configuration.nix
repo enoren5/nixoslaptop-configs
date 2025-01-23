@@ -181,7 +181,14 @@
   wlogout
   steam
   pavucontrol
-];
+  lsd 
+  mpd
+  mako
+  soteria
+  networkmanagerapplet
+  swaybg
+  tig
+  ];
 
 
 fonts.packages = with pkgs; [
