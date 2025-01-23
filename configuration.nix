@@ -188,6 +188,8 @@
   networkmanagerapplet
   swaybg
   tig
+  gimp
+    # catnap
   ];
 
 
