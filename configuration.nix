@@ -193,7 +193,8 @@
   cava
   ranger
   helix
-
+  pywal
+  swaylock
   ];
 
 
