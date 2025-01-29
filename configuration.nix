@@ -195,6 +195,11 @@
   helix
   pywal
   swaylock
+  hyprlock
+  cmatrix
+  mlocate
+  swayidle
+  hypridle
   ];
 
 
