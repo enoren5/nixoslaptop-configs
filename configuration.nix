@@ -1,7 +1,7 @@
 #  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -158,7 +158,7 @@
   btop
   meld
   #inputs.helix.packages."${pkgs.system}".helix # in flake
-  inputs.helix.packages."${pkgs.system}".helix
+    # inputs.helix.packages."${pkgs.system}".helix
   nix-output-monitor
   alacritty 
   discord  
@@ -211,7 +211,15 @@ fonts.packages = with pkgs; [
   nerd-fonts.ubuntu
   nerd-fonts.mplus
   ];
-
+  
+  #let
+  #   pkgs = import (builtins.fetchTarball {
+  #       url = "https://github.com/NixOS/nixpkgs/archive/21808d22b1cda1898b71cf1a1beb524a97add2c4.tar.gz";
+  #   }) {};
+  #
+  #   myPkg = pkgs.hyprland;
+  #i
+  n
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
