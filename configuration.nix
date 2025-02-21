@@ -200,6 +200,10 @@
   mlocate
   swayidle
   hypridle
+  pipes
+  pipes-rs
+
+
   ];
 
 
