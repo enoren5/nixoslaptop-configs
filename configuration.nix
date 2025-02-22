@@ -129,6 +129,7 @@
   xclip
   neovim-gtk
   wget
+  # Web
   google-chrome
   gotop
   foot
@@ -161,7 +162,8 @@
     # inputs.helix.packages."${pkgs.system}".helix
   nix-output-monitor
   alacritty 
-  discord  
+  discord 
+    
     # Next ten lines courtest of vbox demo appliance 4 Jan 2025 to get basic Hyprland working
     waybar # status bar
     mako # notification daemon
@@ -202,7 +204,7 @@
   hypridle
   pipes
   pipes-rs
-
+  nerdfix
 
   ];
 
@@ -214,6 +216,7 @@ fonts.packages = with pkgs; [
   nerd-fonts.hack
   nerd-fonts.ubuntu
   nerd-fonts.mplus
+  nerd-fonts.symbols-only
   ];
   
   #let
