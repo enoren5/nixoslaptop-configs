@@ -10,13 +10,15 @@
     ];
 
   nixpkgs.config.allowUnfree = true;
-  # Next seven lines courtesy of vbox demo appliance 4 Jan 2025 get basic Hyprland working
+  
+  # Compositors
   programs.hyprland = {
     enable = true;
     xwayland.enable = true; # allow x11 applications
   };
   programs.sway.enable = true;
   programs.waybar.enable = true; 
+  
   console.useXkbConfig = true;
   
   programs.steam = {
@@ -65,12 +67,6 @@
   services.xserver.displayManager.gdm.enable = true;
   # services.displayManager.ly.enable = true;
   
-  # services.xserver = {
-  #    displayManager = {
-  #      startx.enable = true;
-  #    };
-  # };
-
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -124,99 +120,55 @@
   
   # CLI    
   vim  
-  neovim
   wl-clipboard
   xclip
   neovim-gtk
   wget
   gotop
-  raadeontop
+  radeontop
   fastfetch
+  curl
+  starship
+  oh-my-posh
+  btop
+  cmatrix
+  nix-output-monitor     
+  stow
+  lynx
+  atuin
+  lsd
+  openssh
+  ranger
+  pipes
+  pipes-rs
+  mlocate
 
-  
+
   # Terminals
-  
+  gnome-terminal
   foot
+  alacritty 
+  kitty
 
-  # Web
+  # Web / Gaming / Graphics
   google-chrome
-
+  steam
+  gimp
 
   # Development
-
-  git  
-
-  gnome-terminal
-  # locate
-
-  curl
+  neovim
   vscode
-
-  signal-desktop
-  openssh
-  gedit
-  # alacritty
-  starship
-  element-desktop
-  gotop 
-  irssi 
-  sway
-  oh-my-posh
+  git
+  tig
+  meld
   libgcc
   libgccjit
   binutils
   musl
   gcc
-  btop
-  meld
-  #inputs.helix.packages."${pkgs.system}".helix # in flake
-    # inputs.helix.packages."${pkgs.system}".helix
-  nix-output-monitor
-  alacritty 
-  discord 
-    
-    # Next ten lines courtest of vbox demo appliance 4 Jan 2025 to get basic Hyprland working
-    waybar # status bar
-    mako # notification daemon
-    libnotify # for mako
-    swww # wallpaper daemon
-    kitty # terminal
-    rofi-wayland # wl equiv of rofi app launcher, window switcher ...
-    networkmanagerapplet # tray applet for network manager -- nm-applet
-    grim # screenshot utility
-    grimblast # grim helper
-    udiskie # automount removable media
+  gedit
 
-  stow
-  lynx
-  # www-browser
-  atuin
-  wlogout
-  steam
-  pavucontrol
-  lsd 
-  mpd
-  mako
-  soteria
-  networkmanagerapplet
-  swaybg
-  tig
-  gimp
-    # catnap
-  cava
-  ranger
-  helix
-  pywal
-  swaylock
-  hyprlock
-  cmatrix
-  mlocate
-  swayidle
-  hypridle
-  pipes
-  pipes-rs
-  nerdfix
-  
+
   # Python-Django dev 
   python3
   heroku
@@ -226,8 +178,45 @@
   python312Packages.eggUnpackHook
   python312Packages.eggBuildHook
   python312Packages.eggInstallHook
+ 
 
-  ];  
+  # Social Butterfly
+  element-desktop
+  irssi 
+  discord  
+  signal-desktop
+
+
+  # Hyprland + Sway
+  sway
+  waybar     # status bar
+  mako       # notification daemon
+  libnotify  # for mako
+  swww       # wallpaper daemon
+  rofi-wayland # wl equiv of rofi app launcher, window switcher ...
+  networkmanagerapplet # tray applet for network manager -- nm-applet
+  grim        # screenshot utility
+  grimblast   # grim helper
+  udiskie     # automount removable media
+  wlogout
+  networkmanagerapplet
+  mako
+  swaybg
+  pywal
+  swaylock
+  hyprlock
+  swayidle
+  hypridle
+  nerdfix   
+  soteria
+
+  # Audio
+  pavucontrol
+  mpd 
+  cava
+
+   
+];  
 
 fonts.packages = with pkgs; [
   nerd-fonts.fira-code
