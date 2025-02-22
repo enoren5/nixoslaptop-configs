@@ -121,26 +121,37 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  
+  # CLI    
+  vim  
   neovim
   wl-clipboard
-  # wayclip
-  # waypaste # Unnecessary, included in wayclip
   xclip
   neovim-gtk
   wget
+  gotop
+  raadeontop
+  fastfetch
+
+  
+  # Terminals
+  
+  foot
+
   # Web
   google-chrome
-  gotop
-  foot
-  radeontop
+
+
+  # Development
+
   git  
+
   gnome-terminal
   # locate
-  python3
+
   curl
   vscode
-  fastfetch
+
   signal-desktop
   openssh
   gedit
@@ -205,9 +216,18 @@
   pipes
   pipes-rs
   nerdfix
+  
+  # Python-Django dev 
+  python3
+  heroku
+  postgresql
+  python312Packages.pip
+  python312Packages.psycopg2
+  python312Packages.eggUnpackHook
+  python312Packages.eggBuildHook
+  python312Packages.eggInstallHook
 
-  ];
-
+  ];  
 
 fonts.packages = with pkgs; [
   nerd-fonts.fira-code
