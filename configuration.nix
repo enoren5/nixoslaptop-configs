@@ -167,7 +167,7 @@
   musl
   gcc
   gedit
-
+  ngrok
 
   # Python-Django dev 
   python3
@@ -209,6 +209,8 @@
   hypridle
   nerdfix   
   soteria
+  hyprpicker
+  
 
   # Audio
   pavucontrol
