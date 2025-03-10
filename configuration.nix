@@ -217,7 +217,11 @@
   mpd 
   cava
 
-   
+  # Sundry
+  recoll
+  
+  
+  
 ];  
 
 fonts.packages = with pkgs; [
