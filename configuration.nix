@@ -210,7 +210,9 @@
   nerdfix   
   soteria
   hyprpicker
-  
+    # hyprpm
+  cpio 
+  cmake
 
   # Audio
   pavucontrol
@@ -219,8 +221,12 @@
 
   # Sundry
   recoll
-  
-  
+ 
+
+    # nerd-fonts.symbols-only
+  jetbrains-mono
+
+    # iosevka 
   
 ];  
 
@@ -230,8 +236,10 @@ fonts.packages = with pkgs; [
   nerd-fonts.noto
   nerd-fonts.hack
   nerd-fonts.ubuntu
-  nerd-fonts.mplus
+    # nerd-fonts.mplu 
   nerd-fonts.symbols-only
+  nerd-fonts.hurmit
+  nerd fonts.iosevka-term
   ];
   
   #let
