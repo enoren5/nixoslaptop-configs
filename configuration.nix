@@ -194,6 +194,9 @@
   libnotify  # for mako
   swww       # wallpaper daemon
   rofi-wayland # wl equiv of rofi app launcher, window switcher ...
+  wofi
+  wofi-emoji
+  wofi-power-menu
   networkmanagerapplet # tray applet for network manager -- nm-applet
   grim        # screenshot utility
   grimblast   # grim helper
@@ -222,12 +225,10 @@
   # Sundry
   recoll
  
-
-    # nerd-fonts.symbols-only
   jetbrains-mono
+  iosevka  
+  nerd-fonts.symbols-only
 
-    # iosevka 
-  
 ];  
 
 fonts.packages = with pkgs; [
@@ -239,7 +240,7 @@ fonts.packages = with pkgs; [
     # nerd-fonts.mplu 
   nerd-fonts.symbols-only
   nerd-fonts.hurmit
-  nerd fonts.iosevka-term
+  nerd-fonts.iosevka-term
   ];
   
   #let
