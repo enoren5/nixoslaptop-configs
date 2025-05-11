@@ -228,7 +228,7 @@
   jetbrains-mono
   iosevka  
   nerd-fonts.symbols-only
-
+  babelstone-han
 ];  
 
 fonts.packages = with pkgs; [
