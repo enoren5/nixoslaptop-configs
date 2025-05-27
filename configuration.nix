@@ -168,6 +168,8 @@
   gcc
   gedit
   ngrok
+  jq
+  bc
 
   # Python-Django dev 
   python3
@@ -213,6 +215,14 @@
   nerdfix   
   soteria
   hyprpicker
+  hyprshot
+  hyprdim
+
+
+    # hyprlandPlugins.hyprfocus
+  hyprlandPlugins.hypr-dynamic-cursors
+  hyprlandPlugins.hyprexpo
+  hyprlandPlugins.hyprspace
     # hyprpm
   cpio 
   cmake
@@ -241,6 +251,7 @@ fonts.packages = with pkgs; [
   nerd-fonts.symbols-only
   nerd-fonts.hurmit
   nerd-fonts.iosevka-term
+  nerd-fonts.jetbrains-mono
   ];
   
   #let
