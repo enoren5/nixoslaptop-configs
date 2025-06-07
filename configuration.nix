@@ -108,6 +108,13 @@
   };
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
+  
+  
+  swapDevices = [{
+    device = "/swapfile";
+    size = 48 * 1024; # 48GB
+  }];
+  
 
   # Install firefox.
   programs.firefox.enable = true; 
@@ -142,7 +149,7 @@
   pipes
   pipes-rs
   mlocate
-
+  inxi
 
   # Terminals
   gnome-terminal
