@@ -150,6 +150,8 @@
   pipes-rs
   mlocate
   inxi
+  killall
+  gawk
 
   # Terminals
   gnome-terminal
