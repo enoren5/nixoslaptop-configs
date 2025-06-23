@@ -1,7 +1,22 @@
 #  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
+
+
+ with lib; let
+  hyprPluginPkgs = inputs.hyprland-plugins.packages.${pkgs.system};
+  hypr-plugin-dir = pkgs.symlinkJoin {
+    name = "hyrpland-plugins";
+    paths = with hyprPluginPkgs; [
+      hyprexpo
+      #...plugins
+    ];
+  };
+in
+{
+  environment.sessionVariables = { HYPR_PLUGIN_DIR = hypr-plugin-dir; };
+} 
 
 {
   imports =
@@ -114,7 +129,7 @@
     device = "/swapfile";
     size = 48 * 1024; # 48GB
   }];
-  
+
 
   # Install firefox.
   programs.firefox.enable = true; 
