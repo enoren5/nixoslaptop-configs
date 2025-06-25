@@ -1,23 +1,7 @@
 #  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, ... }:
-
-
- with lib; let
-  hyprPluginPkgs = inputs.hyprland-plugins.packages.${pkgs.system};
-  hypr-plugin-dir = pkgs.symlinkJoin {
-    name = "hyrpland-plugins";
-    paths = with hyprPluginPkgs; [
-      hyprexpo
-      #...plugins
-    ];
-  };
-in
-{
-  environment.sessionVariables = { HYPR_PLUGIN_DIR = hypr-plugin-dir; };
-} 
-
+{ config, pkgs, lib, hyprland-plugins, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -135,7 +119,16 @@ in
   programs.firefox.enable = true; 
   
   nix.settings.experimental-features = [ "nix-command"]; # "flakes" ];
-   
+  
+  environment.sessionVariables = {
+    HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
+      name = "hyprland-plugins";
+      paths = with hyprland-plugins.packages.${config.nixpkgs.buildPlatform.system}; [
+        hyprexpo
+        #...plugins
+      ];
+    };
+  };
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
