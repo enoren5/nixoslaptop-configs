@@ -1,7 +1,7 @@
 #  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, hyprland-plugins, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -123,8 +123,10 @@
   environment.sessionVariables = {
     HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
       name = "hyprland-plugins";
-      paths = with hyprland-plugins.packages.${config.nixpkgs.buildPlatform.system}; [
+      paths = with pkgs.hyprlandPlugins; [
         hyprexpo
+        # hyprfocus
+        hyprtrails
         #...plugins
       ];
     };
@@ -251,7 +253,8 @@
 
   # Sundry
   recoll
- 
+  clamav
+
   jetbrains-mono
   iosevka  
   nerd-fonts.symbols-only
