@@ -95,8 +95,16 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+ services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+    updater.settings = {
+      LogVerbose = true;
+      };
+    updater.interval = "hourly";
+    };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+    # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.evangelist = {
     isNormalUser = true;
     description = "Paul";
@@ -254,6 +262,7 @@
   # Sundry
   recoll
   clamav
+  kapitano
 
   jetbrains-mono
   iosevka  
