@@ -182,6 +182,7 @@
   google-chrome
   steam
   gimp
+  mangohud
 
   # Development
   neovim
