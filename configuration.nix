@@ -145,6 +145,7 @@
   environment.systemPackages = with pkgs; [
   
   # CLI    
+  wev
   vim  
   wl-clipboard
   xclip
