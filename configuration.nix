@@ -129,17 +129,18 @@
   
   nix.settings.experimental-features = [ "nix-command"]; # "flakes" ];
   
-  environment.sessionVariables = {
+   environment.sessionVariables = {
     HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
       name = "hyprland-plugins";
       paths = with pkgs.hyprlandPlugins; [
         hyprexpo
         # hyprfocus
-        hyprtrails
+        # hyprtrails
         #...plugins
       ];
     };
   };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -249,11 +250,7 @@
   hyprdim
 
 
-    # hyprlandPlugins.hyprfocus
-  hyprlandPlugins.hypr-dynamic-cursors
-  hyprlandPlugins.hyprexpo
-  hyprlandPlugins.hyprspace
-    # hyprpm
+
   cpio 
   cmake
 
