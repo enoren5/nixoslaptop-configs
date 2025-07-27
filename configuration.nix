@@ -280,11 +280,11 @@
   babelstone-han
 
   # gdm rescue 27 July 2025
-  gnome.gnome-session
-  gnome.gnome-shell
-  gnome.gdm
-  gnome.gnome-control-center
-  gnome.gnome-shell-extensions
+  gnome-session
+  gnome-shell
+  gdm
+  gnome-control-center
+  gnome-shell-extensions
   xterm
 ];  
 
