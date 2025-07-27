@@ -96,6 +96,9 @@
   # services.xserver.libinput.enable = true;
   
 
+  services.avahi.enable = false;
+ 
+
   # services.clamav = {
   #daemon.enable = true;
   # updater.enable = true;
@@ -106,14 +109,15 @@
   # };
 
     # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.evangelist = {
+  users.users.Paul = {
     isNormalUser = true;
-    description = "Paul";
+    description = "The Evangelist";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
     #  thunderbird
     ];
   };
+  
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   
@@ -129,17 +133,17 @@
   
   nix.settings.experimental-features = [ "nix-command"]; # "flakes" ];
   
-   environment.sessionVariables = {
-    HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
-      name = "hyprland-plugins";
-      paths = with pkgs.hyprlandPlugins; [
-        hyprexpo
+  # environment.sessionVariables = {
+  #  HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
+  #   name = "hyprland-plugins";
+  #    paths = with pkgs.hyprlandPlugins; [
+  #     hyprexpo
         # hyprfocus
         # hyprtrails
         #...plugins
-      ];
-    };
-  };
+  #    ];
+  #  };
+  #};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
