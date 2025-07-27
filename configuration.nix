@@ -61,10 +61,10 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Enable the GNOME Desktop Environment.
   services.displayManager.gdm.enable = true;
-  
   services.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -154,6 +154,7 @@
   vim  
   wl-clipboard
   xclip
+  pciutils
   neovim-gtk
   wget
   gotop
