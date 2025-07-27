@@ -64,8 +64,13 @@
   services.xserver.videoDrivers = [ "amdgpu" ];
 
   # Enable the GNOME Desktop Environment.
+  # + 
+  # gdm rescue 27 July 2025 : : : :
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.wayland = false;
+  services.dbus.enable = true;
+  security.polkit.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -254,8 +259,7 @@
   hyprshot
   hyprdim
 
-
-
+  # Build enviornmentals
   cpio 
   cmake
 
@@ -269,10 +273,19 @@
   clamav
   kapitano
 
+  # More fonts
   jetbrains-mono
   iosevka  
   nerd-fonts.symbols-only
   babelstone-han
+
+  # gdm rescue 27 July 2025
+  gnome.gnome-session
+  gnome.gnome-shell
+  gnome.gdm
+  gnome.gnome-control-center
+  gnome.gnome-shell-extensions
+  xterm
 ];  
 
 fonts.packages = with pkgs; [
