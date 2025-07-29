@@ -30,6 +30,7 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "nixoslaptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -183,6 +184,7 @@
   inxi
   killall
   gawk
+  mc
 
   # Terminals
   gnome-terminal
@@ -272,8 +274,9 @@
   recoll
   clamav
   kapitano
-
-  # More fonts
+  # thunar
+  
+    # More fonts
   jetbrains-mono
   iosevka  
   nerd-fonts.symbols-only
