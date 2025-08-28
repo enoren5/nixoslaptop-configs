@@ -275,7 +275,7 @@
   clamav
   kapitano
   # thunar
-  
+  libreoffice-qt6-fresh 
     # More fonts
   jetbrains-mono
   iosevka  
