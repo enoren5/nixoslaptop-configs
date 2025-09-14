@@ -238,7 +238,7 @@
   mako       # notification daemon
   libnotify  # for mako
   swww       # wallpaper daemon
-  rofi-wayland # wl equiv of rofi app launcher, window switcher ...
+  rofi # wl equiv of rofi app launcher, window switcher ...
   wofi
   wofi-emoji
   wofi-power-menu
