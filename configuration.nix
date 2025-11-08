@@ -137,7 +137,7 @@
   # Install firefox.
   programs.firefox.enable = true; 
   
-  nix.settings.experimental-features = [ "nix-command"]; # "flakes" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes"]; # "flakes" ];
   
   # environment.sessionVariables = {
   #  HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
@@ -150,6 +150,29 @@
   #    ];
   #  };
   #};
+
+
+programs.nix-ld = {
+  enable = true;
+  libraries = with pkgs; [
+    # X11 & xcb
+    xorg.libxshmfence
+    xorg.libX11 xorg.libXext xorg.libXrandr xorg.libXrender xorg.libXcursor xorg.libXi
+    xorg.libXfixes xorg.libXdamage xorg.libXcomposite xorg.libXinerama
+    xorg.libxcb xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm xorg.xcbutilrenderutil
+
+    # Wayland / input
+    wayland libxkbcommon
+
+    # GL / GPU
+    mesa libdrm
+    # (Optionally) vulkan-loader
+
+    # GTK & common deps
+    glib gtk3
+    zlib expat nspr nss pcre2 libffi
+  ];
+};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -185,7 +208,9 @@
   killall
   gawk
   mc
-
+  appimage-run
+  steam-run
+  
   # Terminals
   gnome-terminal
   foot
@@ -230,7 +255,8 @@
   irssi 
   discord  
   signal-desktop
-
+  betterdiscordctl
+  
 
   # Hyprland + Sway
   sway
@@ -273,7 +299,7 @@
   # Sundry
   recoll
   clamav
-  kapitano
+    # kapitano
   # thunar
   libreoffice-qt6-fresh 
     # More fonts
