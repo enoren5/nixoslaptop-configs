@@ -307,6 +307,8 @@ programs.nix-ld = {
   iosevka  
   nerd-fonts.symbols-only
   babelstone-han
+  unetbootin
+  _1password-gui
 
   # gdm rescue 27 July 2025
   gnome-session
