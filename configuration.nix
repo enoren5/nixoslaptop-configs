@@ -2,6 +2,8 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, lib, ... }:
+
+
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -9,6 +11,9 @@
     ];
 
   nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.permittedInsecurePackages = [
+    "ventoy-1.1.07"
+  ];
   
   # Compositors
   programs.hyprland = {
@@ -67,12 +72,20 @@
   # Enable the GNOME Desktop Environment.
   # + 
   # gdm rescue 27 July 2025 : : : :
-  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = false;
   services.desktopManager.gnome.enable = true;
   services.displayManager.gdm.wayland = false;
   services.dbus.enable = true;
   security.polkit.enable = true;
 
+  # Use greetd instead of gdm
+  services.greetd.enable = true;
+  services.greetd.settings = {
+    default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd Hyprland";
+      user = "greeter";
+    };
+  };
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -177,7 +190,19 @@ programs.nix-ld = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  
+ 
+    (symlinkJoin {
+    name = "unetbootin-wrapped";
+    paths = [ unetbootin ];
+    nativeBuildInputs = [ makeWrapper ];
+    postBuild = ''
+      wrapProgram "$out/bin/unetbootin" \
+        --prefix QT_PLUGIN_PATH : "${qt5.qtbase}/${qt5.qtbase.qtPluginPrefix}" \
+        --prefix QT_PLUGIN_PATH : "${qt5.qtwayland}/${qt5.qtbase.qtPluginPrefix}" \
+        --set QT_QPA_PLATFORM xcb
+    '';
+  })
+
   # CLI    
   wev
   vim  
@@ -309,6 +334,8 @@ programs.nix-ld = {
   babelstone-han
   unetbootin
   _1password-gui
+  # unetbootinWrapped
+  ventoy
 
   # gdm rescue 27 July 2025
   gnome-session
