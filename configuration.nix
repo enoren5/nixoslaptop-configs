@@ -1,53 +1,32 @@
-#  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, lib, ... }:
+
+# ----- [ IMPORTS ] ------------------------------
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  nixpkgs.config.allowUnfree = true;
-  
-  # Compositors
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true; # allow x11 applications
-  };
-  programs.sway.enable = true;
-  programs.waybar.enable = true; 
-  
-  console.useXkbConfig = true;
-  
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-
-  # Bootloader
+# ----- [ BOOTLOADER ] ------------------------------
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+# ----- [ KERNEL and FIRMWARE ] ------------------------------
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  hardware.firmware = [ pkgs.linux-firmware ];
 
-  networking.hostName = "nixoslaptop"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+# ----- [ HOSTNAME ] ------------------------------
+  networking.hostName = "nixoslaptop";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+# ----- [ NETWORKING AND WIFI ] ------------------------------
+  # Set up network manager
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
+# ----- [ TIME AND INTERNATIONALIZATION ] ------------------------------
   time.timeZone = "America/New_York";
-
-  # Select internationalisation properties.
+  # "internationalization stuff, you might not need to touch this"
+  # "A long time ago, we had alot of standards, this is the fallout..."
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -60,85 +39,27 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
+# ----- [ DISPLAY MANAGER ] ------------------------------
+# Note: Your display manager is a fancy login screen
+  services.displayManager.gdm.wayland = false;
+  services.displayManager.gdm.enable = true;
+
+# ----- [ DESKTOP ] ------------------------------
+# Note: With your setup, you have two display server protocols setup. This is not recommended.
+# Programs using the display server protocols Wayland: Gnome, hyprland, sway
+# Programs using the older display server protocols x11: gdm
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true; # allow x11 applications (Emulate x11 for programs that have not switched yet. Mostly old flatpaks)
+  };
+
+  programs.sway.enable = true;
+
+  # Enable X11 display manager
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
 
-  # Enable the GNOME Desktop Environment.
-  # + 
-  # gdm rescue 27 July 2025 : : : :
-  services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.wayland = false;
-  services.dbus.enable = true;
-  security.polkit.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  
-
-  services.avahi.enable = false;
- 
-
-  # services.clamav = {
-  #daemon.enable = true;
-  # updater.enable = true;
-  # updater.settings = {
-  #   LogVerbose = true;
-  #   };
-  # updater.interval = "hourly";
-  # };
-
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.Paul = {
-    isNormalUser = true;
-    description = "The Evangelist";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
-  };
-  
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-  
-  
-  swapDevices = [{
-    device = "/swapfile";
-    size = 48 * 1024; # 48GB
-  }];
-
-
-  # Install firefox.
-  programs.firefox.enable = true; 
-  
-  nix.settings.experimental-features = [ "nix-command" "flakes"]; # "flakes" ];
-  
   # environment.sessionVariables = {
   #  HYPR_PLUGIN_DIR = pkgs.symlinkJoin {
   #   name = "hyprland-plugins";
@@ -151,36 +72,65 @@
   #  };
   #};
 
+# ----- [ DRIVER CONFIG ] ------------------------------
+# While driver config on NixOS is not easy, here is AMD setup. (Setup by rhbollinger1s, who use NIVIDA on linux, so AMD is easy.)
+  hardware = {
+      graphics.enable = true;
+      graphics.enable32Bit = true;
+      amdgpu.opencl.enable = true;
+      amdgpu.initrd.enable = true; # sets boot.initrd.kernelModules = ["amdgpu"];
+      #amdgpu.legacySupport.enable = true; # Only use for Southern islands or Sea islands GPUs
+    };
+# ----- [ XDG PORTALS ] ------------------------------
+  xdg.portal.enable = true;
 
-programs.nix-ld = {
-  enable = true;
-  libraries = with pkgs; [
-    # X11 & xcb
-    xorg.libxshmfence
-    xorg.libX11 xorg.libXext xorg.libXrandr xorg.libXrender xorg.libXcursor xorg.libXi
-    xorg.libXfixes xorg.libXdamage xorg.libXcomposite xorg.libXinerama
-    xorg.libxcb xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm xorg.xcbutilrenderutil
+# ----- [ SUID WRAPPERS ] ------------------------------
+  # "Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions. Dont worry about it."
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+     enable = true;
+     enableSSHSupport = true;
+   };
 
-    # Wayland / input
-    wayland libxkbcommon
+# ----- [ USER ACCOUNTS ] ------------------------------
+  users.users.Paul = {
+    isNormalUser = true;
+    description = "The Evangelist";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+    #  thunderbird
+    ];
+  };
 
-    # GL / GPU
-    mesa libdrm
-    # (Optionally) vulkan-loader
+# ----- [ PROGRAMS ] ------------------------------
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true; # For non FOSS software to be allowed
 
-    # GTK & common deps
-    glib gtk3
-    zlib expat nspr nss pcre2 libffi
+  # Here, we add fonts... yay.
+fonts.packages = with pkgs; [
+  nerd-fonts.fira-code
+  nerd-fonts.droid-sans-mono
+  nerd-fonts.noto
+  nerd-fonts.hack
+  nerd-fonts.ubuntu
+    # nerd-fonts.mplu
+  nerd-fonts.symbols-only
+  nerd-fonts.hurmit
+  nerd-fonts.iosevka-term
+  nerd-fonts.jetbrains-mono
   ];
-};
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # "Programs that are not fonts are below. There are two kinds"
+  # "There are installed packages, that work as you would think"
+  # "Then we have enabled packages, these have other things they need, so enabling it does more that just installing it."
+
+  # Installed Packages
   environment.systemPackages = with pkgs; [
-  
-  # CLI    
+
+  # CLI
   wev
-  vim  
+  vim
   wl-clipboard
   xclip
   pciutils
@@ -194,7 +144,7 @@ programs.nix-ld = {
   oh-my-posh
   btop
   cmatrix
-  nix-output-monitor     
+  nix-output-monitor
   stow
   lynx
   atuin
@@ -210,11 +160,11 @@ programs.nix-ld = {
   mc
   appimage-run
   steam-run
-  
+
   # Terminals
   gnome-terminal
   foot
-  alacritty 
+  alacritty
   kitty
 
   # Web / Gaming / Graphics
@@ -239,7 +189,7 @@ programs.nix-ld = {
   jq
   bc
 
-  # Python-Django dev 
+  # Python-Django dev
   python3
   heroku
   postgresql
@@ -248,15 +198,15 @@ programs.nix-ld = {
   python312Packages.eggUnpackHook
   python312Packages.eggBuildHook
   python312Packages.eggInstallHook
- 
+
 
   # Social Butterfly
   element-desktop
-  irssi 
-  discord  
+  irssi
+  discord
   signal-desktop
   betterdiscordctl
-  
+
 
   # Hyprland + Sway
   sway
@@ -281,19 +231,19 @@ programs.nix-ld = {
   hyprlock
   swayidle
   hypridle
-  nerdfix   
+  nerdfix
   soteria
   hyprpicker
   hyprshot
   hyprdim
 
   # Build enviornmentals
-  cpio 
+  cpio
   cmake
 
   # Audio
   pavucontrol
-  mpd 
+  mpd
   cava
 
   # Sundry
@@ -301,10 +251,10 @@ programs.nix-ld = {
   clamav
     # kapitano
   # thunar
-  libreoffice-qt6-fresh 
+  libreoffice-qt6-fresh
     # More fonts
   jetbrains-mono
-  iosevka  
+  iosevka
   nerd-fonts.symbols-only
   babelstone-han
   unetbootin
@@ -317,54 +267,98 @@ programs.nix-ld = {
   gnome-control-center
   gnome-shell-extensions
   xterm
-];  
+];
 
-fonts.packages = with pkgs; [
-  nerd-fonts.fira-code
-  nerd-fonts.droid-sans-mono
-  nerd-fonts.noto
-  nerd-fonts.hack
-  nerd-fonts.ubuntu
-    # nerd-fonts.mplu 
-  nerd-fonts.symbols-only
-  nerd-fonts.hurmit
-  nerd-fonts.iosevka-term
-  nerd-fonts.jetbrains-mono
-  ];
-  
-  #let
-  #   pkgs = import (builtins.fetchTarball {
-  #       url = "https://github.com/NixOS/nixpkgs/archive/21808d22b1cda1898b71cf1a1beb524a97add2c4.tar.gz";
-  #   }) {};
-  #
-  #   myPkg = pkgs.hyprland;
-  #i
-  
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      # X11 & xcb
+      xorg.libxshmfence
+      xorg.libX11 xorg.libXext xorg.libXrandr xorg.libXrender xorg.libXcursor xorg.libXi
+      xorg.libXfixes xorg.libXdamage xorg.libXcomposite xorg.libXinerama
+      xorg.libxcb xorg.xcbutil xorg.xcbutilimage xorg.xcbutilkeysyms xorg.xcbutilwm xorg.xcbutilrenderutil
 
-  # List services that you want to enable:
+      # Wayland / input
+      wayland libxkbcommon
 
-  # Enable the OpenSSH daemon.
+      # GL / GPU
+      mesa libdrm
+      # (Optionally) vulkan-loader
+
+      # GTK & common deps
+      glib gtk3
+      zlib expat nspr nss pcre2 libffi
+    ];
+  };
+
+  # Enabled Packages
+
+  # Steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+  };
+
+  # Topbar for WMs
+  programs.waybar.enable = true;  # Topbar
+
+  # zsh shell
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
+  #Firefox
+  programs.firefox.enable = true;
+
+# ----- [ AUTO UPDATES ] ------------------------------
+  #system.autoUpgrade.enable = true;
+  #system.autoUpgrade.allowReboot = false;
+
+# ----- [ SERVICES and STUFF ] ------------------------------
+  services.dbus.enable = true;
+  security.polkit.enable = true;
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+  security.rtkit.enable = true;
+  services.avahi.enable = false;
+  services.printing.enable = true;
+  # audio setup
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+    wireplumber.enable = true;
+  };
+  swapDevices = [{
+    device = "/swapfile";
+    size = 48 * 1024; # 48GB
+  }];
+   # For overclocking AMD GPUs
+  #services.lact.enable = true;
   services.openssh.enable = true;
+  # "Firmware updating software"
+  services.fwupd.enable = true;
+  # "Power profiles"
+  services.power-profiles-daemon.enable = true;
+  # Bluetooth
+  # "So, bluetooth is very hackable, but people use it. Not enabled, but you can take the risk. Most people do on their phones, but we are Linux people, and dont like things like that."
+  # hardware.bluetooth.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+# ----- [ FLAKES ] ------------------------------
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
+# ----- [ FIREWALL ] ------------------------------
+  networking.firewall.allowedTCPPorts = [ 22 80 443 ];  # SSH, HTTP, HTTPS
+  networking.firewall.allowPing = true;
+  networking.firewall.enable = true;
+  services.fail2ban.enable = true;
 
+# ----- [ STATE VERSION ] ------------------------------
+  system.stateVersion = "24.11" ; # Even if you update, do not change this. You need not understand why, just now that NixOS will kill itself if you do.
+  # Did you read this comment? Lol
 }
