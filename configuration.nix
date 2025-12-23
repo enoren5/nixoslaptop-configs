@@ -315,7 +315,7 @@ fonts.packages = with pkgs; [
   #system.autoUpgrade.enable = true;
   #system.autoUpgrade.allowReboot = false;
 
-# ----- [ SERVICES and STUFF ] ------------------------------  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+# ----- [ SERVICES and STUFF ] ------------------------------
   services.dbus.enable = true;
   security.polkit.enable = true;
   services.xserver.xkb = {
@@ -338,6 +338,8 @@ fonts.packages = with pkgs; [
     device = "/swapfile";
     size = 48 * 1024; # 48GB
   }];
+   # For overclocking AMD GPUs
+  #services.lact.enable = true;
   services.openssh.enable = true;
   # "Firmware updating software"
   services.fwupd.enable = true;
