@@ -11,9 +11,9 @@
     ];
 
   nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.permittedInsecurePackages = [
-    "ventoy-1.1.07"
-  ];
+  #  nixpkgs.config.permittedInsecurePackages = [
+  #  "ventoy-1.1.07"
+  # ];
   
   # Compositors
   programs.hyprland = {
@@ -335,7 +335,7 @@ programs.nix-ld = {
   unetbootin
   _1password-gui
   # unetbootinWrapped
-  ventoy
+    # ventoy
 
   # gdm rescue 27 July 2025
   gnome-session
@@ -344,6 +344,7 @@ programs.nix-ld = {
   gnome-control-center
   gnome-shell-extensions
   xterm
+  gnome-tweaks
 ];  
 
 fonts.packages = with pkgs; [
